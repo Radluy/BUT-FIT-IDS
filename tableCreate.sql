@@ -9,11 +9,11 @@ DROP TABLE Miesto_s_magiou CASCADE CONSTRAINTS ;
 DROP TABLE Ucitel CASCADE CONSTRAINTS ;
 
 CREATE TABLE Ucitel(
-    ID int NOT NULL PRIMARY KEY
+    ID int GENERATED AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY
 );
 
 CREATE TABLE Kuzelnik(
-    ID int NOT NULL PRIMARY KEY,
+    ID int GENERATED AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     Uroven numeric(2) NOT NULL,
     Velkost_many numeric(3) NOT NULL,
     Ucitel_ID int DEFAULT NULL,
@@ -23,14 +23,14 @@ CREATE TABLE Kuzelnik(
 );
 
 CREATE TABLE Element(
-    ID int NOT NULL PRIMARY KEY,
+    ID int GENERATED AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     Specializacia varchar(50)
         CHECK ( Specializacia in ('FIRE', 'ICE', 'WATER', 'AIR', 'EARTH', 'ELECTRIC', 'POISON', 'DARK', 'LIGHT')),
     Farba varchar(50)
 );
 
 CREATE TABLE Grimoar(
-  ID int NOT NULL PRIMARY KEY,
+  ID int GENERATED AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
   Energia numeric(2) NOT NULL ,
   Autor_id int NOT NULL ,
   Primarny_element int NOT NULL ,
@@ -47,7 +47,7 @@ CREATE TABLE Synergia(
 );
 
 CREATE TABLE Kuzlo(
-    ID int NOT NULL PRIMARY KEY,
+    ID int GENERATED AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     Hlavny_element int NOT NULL ,
     Vedlajsi_element int DEFAULT NULL ,
     Zlozitost numeric(1) NOT NULL ,
@@ -74,7 +74,7 @@ CREATE TABLE Grimoar_je_vlastneny(
 );
 
 CREATE TABLE Miesto_s_magiou(
-  ID int NOT NULL PRIMARY KEY,
+  ID int GENERATED AS IDENTITY(START WITH 1 INCREMENT BY 1) PRIMARY KEY,
   Miera_magie numeric(2) NOT NULL ,
   Presakujuci_element int NOT NULL ,
   FOREIGN KEY (Presakujuci_element) REFERENCES Element(ID)
@@ -83,31 +83,31 @@ CREATE TABLE Miesto_s_magiou(
 
 --Insert--
 
-INSERT INTO Ucitel (ID)
-VALUES (1);
-INSERT INTO Ucitel (ID)
-VALUES (2);
+INSERT INTO Ucitel
+VALUES (default);
+INSERT INTO Ucitel
+VALUES (default);
 
-INSERT INTO Kuzelnik (ID, Uroven, Velkost_many)
-VALUES (3, 5, 90);
-INSERT INTO Kuzelnik (ID, Uroven, Velkost_many)
-VALUES (4, 50, 400);
-INSERT INTO Kuzelnik (ID, Uroven, Velkost_many, Ucitel_ID)
-VALUES (1, 90, 800, 1);
-INSERT INTO Kuzelnik (ID, Uroven, Velkost_many, Ucitel_ID)
-VALUES (5, 80, 750, 2);
+INSERT INTO Kuzelnik (Uroven, Velkost_many)
+VALUES (5, 90);
+INSERT INTO Kuzelnik (Uroven, Velkost_many)
+VALUES (50, 400);
+INSERT INTO Kuzelnik (Uroven, Velkost_many, Ucitel_ID)
+VALUES (90, 800, 1);
+INSERT INTO Kuzelnik (Uroven, Velkost_many, Ucitel_ID)
+VALUES (80, 750, 2);
 
-INSERT INTO Element (ID, Specializacia, Farba)
-VALUES (1, 'FIRE', 'RED');
-INSERT INTO Element (ID, Specializacia, Farba)
-VALUES (2, 'ICE', 'BLUE');
-INSERT INTO Element (ID, Specializacia, Farba)
-VALUES (3, 'AIR', 'WHITE');
+INSERT INTO Element (Specializacia, Farba)
+VALUES ('FIRE', 'RED');
+INSERT INTO Element (Specializacia, Farba)
+VALUES ('ICE', 'BLUE');
+INSERT INTO Element (Specializacia, Farba)
+VALUES ('AIR', 'WHITE');
 
-INSERT INTO Grimoar (ID, Energia, Autor_id, Primarny_element)
-VALUES (1, 90, 1, 2);
-INSERT INTO Grimoar (ID, Energia, Autor_id, Primarny_element)
-VALUES (2, 50, 2, 1);
+INSERT INTO Grimoar (Energia, Autor_id, Primarny_element)
+VALUES (90, 1, 2);
+INSERT INTO Grimoar (Energia, Autor_id, Primarny_element)
+VALUES (50, 2, 1);
 
 INSERT INTO Synergia (Kuzelnik_id, Element_id)
 VALUES (1, 2);
@@ -116,12 +116,12 @@ VALUES (4, 3);
 INSERT INTO Synergia (Kuzelnik_id, Element_id)
 VALUES (3, 3);
 INSERT INTO Synergia (Kuzelnik_id, Element_id)
-VALUES (5, 1);
+VALUES (2, 1);
 
-INSERT INTO Kuzlo (ID, Hlavny_element, Zlozitost, Typ, Sila)
-VALUES (1, 1, 6, 'OFFENSIVE', 75);
-INSERT INTO Kuzlo (ID, Hlavny_element, Vedlajsi_element, Zlozitost, Typ, Sila)
-VALUES (2, 2, 3, 8, 'DEFENSIVE', 95);
+INSERT INTO Kuzlo (Hlavny_element, Zlozitost, Typ, Sila)
+VALUES (1, 6, 'OFFENSIVE', 75);
+INSERT INTO Kuzlo (Hlavny_element, Vedlajsi_element, Zlozitost, Typ, Sila)
+VALUES (2, 3, 8, 'DEFENSIVE', 95);
 
 INSERT INTO Grimoar_obsahuje (Grimoar_id, Kuzlo_id)
 VALUES (1, 1);
@@ -133,7 +133,7 @@ VALUES (1, 3, DATE '2010-10-10', DATE '2030-06-26');
 INSERT INTO Grimoar_je_vlastneny (Grimoar_id, Kuzelnik_id, Od, Do)
 VALUES (2, 4, DATE '2018-02-15', DATE '2019-11-26');
 
-INSERT INTO Miesto_s_magiou (ID, Miera_magie, Presakujuci_element)
-VALUES (1, 65, 2);
+INSERT INTO Miesto_s_magiou (Miera_magie, Presakujuci_element)
+VALUES (65, 2);
 
 
