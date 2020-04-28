@@ -254,29 +254,21 @@ BEGIN pocet_kuzelnikov_a_synergi(); END;
 BEGIN pocet_grimoarov_s_kuzlom(2); END;
 
 
+DROP INDEX uroven_kuzelnika;
 --explain plan--
---ktory kuzelnici s urovnou pod 60 vlastnia grimoar a kolko ich vlastnia
 EXPLAIN PLAN FOR
-SELECT "k".Uroven AS uroven,
-       COUNT("g".Grimoar_id) AS pocet_grimoarov
-FROM Kuzelnik "k"
-JOIN Grimoar_je_vlastneny "g" ON "g".Kuzelnik_id = "k".ID
-WHERE "k".Uroven < 60
-GROUP BY "k".ID, "k".Uroven
-ORDER BY "k".Uroven;
+SELECT Uroven, Zlozitost
+FROM Kuzelnik NATURAL JOIN Kuzlo
+GROUP BY Uroven, Zlozitost;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 --pokus s vytvorenym indexom
 CREATE INDEX uroven_kuzelnika ON Kuzelnik (Uroven);
 
 EXPLAIN PLAN FOR
-SELECT "k".Uroven AS uroven,
-       COUNT("g".Grimoar_id) AS pocet_grimoarov
-FROM Kuzelnik "k"
-JOIN Grimoar_je_vlastneny "g" ON "g".Kuzelnik_id = "k".ID
-WHERE "k".Uroven < 60
-GROUP BY "k".ID, "k".Uroven
-ORDER BY "k".Uroven;
+SELECT Uroven, Zlozitost
+FROM Kuzelnik NATURAL JOIN Kuzlo
+GROUP BY Uroven, Zlozitost;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 
