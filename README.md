@@ -1,3 +1,4 @@
 # FIT-IDS
-part1: done
-part2: almost
+Projekt do predmetu IDS na FIT VUT.
+
+Obsahuje niekoľko SQL skriptov na tvorbu tabuliek, výber informacíí, pohľady, procedúry a triggery.
