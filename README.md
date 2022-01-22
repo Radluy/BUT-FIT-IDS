@@ -1,4 +1,3 @@
-# FIT-IDS
-Projekt do predmetu IDS na FIT VUT.
+# BUT-FIT-IDS
 
-Obsahuje niekoľko SQL skriptov na tvorbu tabuliek, výber informacíí, pohľady, procedúry a triggery.
+SQL project including a few scripts for table creation, multiple selects, views, procedures and triggers.
